@@ -11,7 +11,7 @@ namespace Enyim.Caching.Configuration
     public interface IMemcachedClientConfiguration
     {
         /// <summary>
-        /// Gets a list of <see cref="T:IPEndPoint"/> each representing a Memcached server in the pool.
+        /// Gets a list of <see cref="T:EndPoint"/> each representing a Memcached server in the pool.
         /// </summary>
         IList<EndPoint> Servers { get; }
 

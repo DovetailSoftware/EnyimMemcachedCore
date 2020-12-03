@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Enyim.Caching.Memcached;
+using System;
 
 namespace Enyim.Caching.Configuration
 {
@@ -15,9 +12,9 @@ namespace Enyim.Caching.Configuration
         private TimeSpan deadTimeout = new TimeSpan(0, 0, 10);
         private TimeSpan queueTimeout = new TimeSpan(0, 0, 0, 0, 100);
         private TimeSpan _initPoolTimeout = new TimeSpan(0, 1, 0);
-        private INodeFailurePolicyFactory FailurePolicyFactory = new ThrottlingFailurePolicyFactory(5, TimeSpan.FromMilliseconds(2000));
+        private INodeFailurePolicyFactory _failurePolicyFactory = new ThrottlingFailurePolicyFactory(5, TimeSpan.FromMilliseconds(2000));
 
-        int ISocketPoolConfiguration.MinPoolSize
+        public int MinPoolSize
         {
             get { return this.minPoolSize; }
             set { this.minPoolSize = value; }
@@ -28,13 +25,13 @@ namespace Enyim.Caching.Configuration
         /// </summary>
         /// <returns>The maximum amount of sockets per server in the socket pool. The default is 20.</returns>
         /// <remarks>It should be 0.75 * (number of threads) for optimal performance.</remarks>
-        int ISocketPoolConfiguration.MaxPoolSize
+        public int MaxPoolSize
         {
             get { return this.maxPoolSize; }
             set { this.maxPoolSize = value; }
         }
 
-        TimeSpan ISocketPoolConfiguration.ConnectionTimeout
+        public TimeSpan ConnectionTimeout
         {
             get { return this.connectionTimeout; }
             set
@@ -46,7 +43,7 @@ namespace Enyim.Caching.Configuration
             }
         }
 
-        TimeSpan ISocketPoolConfiguration.ReceiveTimeout
+        public TimeSpan ReceiveTimeout
         {
             get { return this.receiveTimeout; }
             set
@@ -58,7 +55,7 @@ namespace Enyim.Caching.Configuration
             }
         }
 
-        TimeSpan ISocketPoolConfiguration.QueueTimeout
+        public TimeSpan QueueTimeout
         {
             get { return this.queueTimeout; }
             set
@@ -70,7 +67,7 @@ namespace Enyim.Caching.Configuration
             }
         }
 
-        TimeSpan ISocketPoolConfiguration.InitPoolTimeout
+        public TimeSpan InitPoolTimeout
         {
             get { return _initPoolTimeout; }
             set
@@ -82,7 +79,7 @@ namespace Enyim.Caching.Configuration
             }
         }
 
-        TimeSpan ISocketPoolConfiguration.DeadTimeout
+        public TimeSpan DeadTimeout
         {
             get { return this.deadTimeout; }
             set
@@ -94,15 +91,15 @@ namespace Enyim.Caching.Configuration
             }
         }
 
-        INodeFailurePolicyFactory ISocketPoolConfiguration.FailurePolicyFactory
+        public INodeFailurePolicyFactory FailurePolicyFactory
         {
-            get { return this.FailurePolicyFactory; }
+            get { return this._failurePolicyFactory; }
             set
             {
                 if (value == null)
                     throw new ArgumentNullException("value");
 
-                this.FailurePolicyFactory = value;
+                this._failurePolicyFactory = value;
             }
         }
     }
